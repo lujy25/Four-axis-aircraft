@@ -1,6 +1,8 @@
 #include <string.h> 
  char *setNameCode = "AT+NAME=Jukia\x0d\x0a";
  char *setPasswordCode = "AT+PSWD=6666\x0d\x0a";
+ int blueControlPin = 7;
+ int ledPin = 13;
  void setName() {
    for (int i = 0; i < strlen(setNameCode); i++) {
     Serial3.write(setNameCode[i]);
@@ -14,14 +16,15 @@
 void setup() {
   Serial.begin(9600);
   Serial3.begin(38400);
-  pinMode(13,OUTPUT);
-  pinMode(7, OUTPUT);
+  pinMode(ledPin,OUTPUT);
+  pinMode(blueControlPin, OUTPUT);
   delay(3000);
-  digitalWrite(7, HIGH);
+  /*digitalWrite(7, HIGH);
   setName();
   delay(2000);
   setPassword();
-  digitalWrite(7,LOW);
+  digitalWrite(7,LOW);*/
+  digitalWrite(blueControlPin, LOW);
   delay(1000);
 }
 void loop() {
