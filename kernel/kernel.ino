@@ -37,6 +37,7 @@ THE SOFTWARE.
 // for both classes must be in the include path of your project
 #include "I2Cdev.h"
 #include "MPU6050.h"
+#include "Sensor.h"
 #include <Servo.h> 
 #include<math.h>
 // class default I2C address is 0x68
@@ -44,13 +45,25 @@ THE SOFTWARE.
 // AD0 low = 0x68 (default for InvenSense evaluation board)
 // AD0 high = 0x69
 MPU6050 accelgyro;
+Attitude Rpy;
 Servo myservo;  // create servo object to control a servo 
 int16_t ax, ay, az;
 int16_t gx, gy, gz;
 
 #define LED_PIN 13
 bool blinkState = false;
-
+void setup() {
+  Serial.begin(38400);
+  Sensor_Setup(accelgyro);
+}
+void loop() {
+ Sensor_Read(accelgyro);
+ Serial.print("ROLL: ");
+  Serial.print(Rpy.ROLL); Serial.print("\tPITCH: ");
+  Serial.print(Rpy.PITCH); Serial.print("\tYAW: ");
+  Serial.println(Rpy.YAW);
+}
+/*
 #define Kp 2.0f
 #define Ki 0.002f
 #define halfT 0.001f
@@ -93,6 +106,7 @@ void IMUupdate(float gx, float gy, float gz, float ax, float ay, float az) {
   q2 = q2 / norm;
   q3 = q3 / norm;
 }
+/*
 void setup() {
     // join I2C bus (I2Cdev library doesn't do this automatically)
     Wire.begin();
@@ -128,4 +142,4 @@ void loop() {
    Serial.println();
 
   
-}
+}*/
